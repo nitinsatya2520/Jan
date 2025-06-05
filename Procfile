@@ -1,1 +1,1 @@
-web: python Jan.py
+gunicorn app:app
