@@ -50,7 +50,7 @@ def get_weather(command):
     if not city:
         return "Please specify the city you want the weather for."
 
-    api_key = "YOUR_OPENWEATHERMAP_API_KEY"  # Replace with your key
+    api_key = "03f7fb2a6ffa9af4e20414dc73edb7a3"  # Replace with your key
     base_url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
 
     try:
@@ -67,7 +67,7 @@ def get_weather(command):
         return f"An error occurred while fetching the weather: {e}"
 
 def get_news():
-    api_key = "03f7fb2a6ffa9af4e20414dc73edb7a3"  # Replace with your key
+    api_key = "c83f785369614f86b9b145c09b7c5c56"  # Replace with your key
     url = f"https://newsapi.org/v2/top-headlines?country=us&apiKey={api_key}"
 
     try:
