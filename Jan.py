@@ -169,6 +169,16 @@ def handle_command_with_nlp(command):
         # Fallback - just echo back or say info not found
         return f"You said: {command}"
 
+
+
+@app.route('/')
+def home():
+    return jsonify({"status": "Jan backend is live"})
+
+
+
+
+
 @app.route('/api/command', methods=['POST'])
 def api_command():
     data = request.json
