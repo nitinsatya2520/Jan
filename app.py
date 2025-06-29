@@ -110,6 +110,18 @@ def perform_math(command):
     except Exception:
         return "Sorry, I couldn't calculate that."
 
+
+def fallback_web_search(command):
+    try:
+        summary = wikipedia.summary(command, sentences=2)
+        return summary
+    except wikipedia.exceptions.DisambiguationError as e:
+        return f"Your query is ambiguous. Try one of these: {', '.join(e.options[:5])}"
+    except wikipedia.exceptions.PageError:
+        return f"Sorry, I couldn't find any result on Wikipedia for '{command}'."
+    except Exception:
+        return "An error occurred while searching online."
+        
 def convert_units(command):
     ureg = pint.UnitRegistry()
     try:
@@ -167,7 +179,7 @@ def handle_command_with_nlp(command):
 
     else:
         # Fallback - just echo back or say info not found
-        return f"You said: {command}"
+        return fallback_web_search(command)
 
 
 
