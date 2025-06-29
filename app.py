@@ -107,17 +107,21 @@ def perform_math(command):
     except Exception:
         return "Sorry, I couldn't calculate that."
 
+import wikipedia
+
 def fallback_web_search(command):
     try:
+        page = wikipedia.page(command)
         summary = wikipedia.summary(command, sentences=2)
-        return summary
+        return f"{summary}<br><br>🔗 <a href='{page.url}' target='_blank'>Read more on Wikipedia</a>"
     except wikipedia.exceptions.DisambiguationError as e:
         return f"Your query is ambiguous. Try one of these: {', '.join(e.options[:5])}"
     except wikipedia.exceptions.PageError:
-        # Fall back to Google
-        return f"Sorry, I couldn't find any result on Wikipedia. Here's a Google search: https://www.google.com/search?q={command.replace(' ', '+')}"
+        google_url = f"https://www.google.com/search?q={command.replace(' ', '+')}"
+        return f"Sorry, I couldn't find any result on Wikipedia. Here's a Google search: <a href='{google_url}' target='_blank'>{google_url}</a>"
     except Exception:
-        return f"An error occurred. You can try searching here: https://www.google.com/search?q={command.replace(' ', '+')}"
+        google_url = f"https://www.google.com/search?q={command.replace(' ', '+')}"
+        return f"An error occurred. Here's a Google search: <a href='{google_url}' target='_blank'>{google_url}</a>"
 
 def convert_units(command):
     ureg = pint.UnitRegistry()
