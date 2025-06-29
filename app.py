@@ -111,18 +111,38 @@ import wikipedia
 
 def fallback_web_search(command):
     try:
+        # Try getting Wikipedia summary and URL
         page = wikipedia.page(command)
         summary = wikipedia.summary(command, sentences=2)
-        return f"{summary}<br><br>🔗 <a href='{page.url}' target='_blank'>Read more on Wikipedia</a>"
+        wiki_url = page.url
+        youtube_url = f"https://www.youtube.com/results?search_query={command.replace(' ', '+')}"
+        return (
+            f"{summary}<br><br>"
+            f"🔗 <a href='{wiki_url}' target='_blank'>Read more on Wikipedia</a><br>"
+            f"▶️ <a href='{youtube_url}' target='_blank'>Search on YouTube</a>"
+        )
     except wikipedia.exceptions.DisambiguationError as e:
         return f"Your query is ambiguous. Try one of these: {', '.join(e.options[:5])}"
     except wikipedia.exceptions.PageError:
+        # Wikipedia page not found, fallback to Google and YouTube
         google_url = f"https://www.google.com/search?q={command.replace(' ', '+')}"
-        return f"Sorry, I couldn't find any result on Wikipedia. Here's a Google search: <a href='{google_url}' target='_blank'>{google_url}</a>"
+        youtube_url = f"https://www.youtube.com/results?search_query={command.replace(' ', '+')}"
+        return (
+            f"Couldn't find results on Wikipedia.<br><br>"
+            f"🔎 <a href='{google_url}' target='_blank'>Search on Google</a><br>"
+            f"▶️ <a href='{youtube_url}' target='_blank'>Search on YouTube</a>"
+        )
     except Exception:
         google_url = f"https://www.google.com/search?q={command.replace(' ', '+')}"
-        return f"An error occurred. Here's a Google search: <a href='{google_url}' target='_blank'>{google_url}</a>"
+        youtube_url = f"https://www.youtube.com/results?search_query={command.replace(' ', '+')}"
+        return (
+            f"An error occurred while searching.<br><br>"
+            f"🔎 <a href='{google_url}' target='_blank'>Search on Google</a><br>"
+            f"▶️ <a href='{youtube_url}' target='_blank'>Search on YouTube</a>"
+        )
 
+
+        
 def convert_units(command):
     ureg = pint.UnitRegistry()
     try:
