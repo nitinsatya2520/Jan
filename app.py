@@ -173,6 +173,33 @@ def handle_command_with_nlp(command):
         return add_reminder(reminder_text)
     elif 'list reminders' in command_lower:
         return list_reminders()
+    elif 'google' in command_lower:
+        google_query = command_lower.replace('google', '').strip()
+        google_url = f"https://www.google.com/search?q={google_query.replace(' ', '+')}"
+        return f"Opening Google for '{google_query}' is not supported in text mode."
+    elif 'youtube' in command_lower:
+        youtube_query = command_lower.replace('youtube', '').strip()
+        youtube_url = f"https://www.youtube.com/results?search_query={youtube_query.replace(' ', '+')}"
+        return f"Opening YouTube for '{youtube_query}' is not supported in text mode."
+    elif 'wikipedia' in command_lower:
+        wikipedia_query = command_lower.replace('wikipedia', '').strip()
+        return fallback_web_search(wikipedia_query)
+    elif any(phrase in command_lower for phrase in ['who is kadavakollu nitin satya', 'who is nitin', 'say about nitin', 'tell me about nitin', 'tell me about yourself', 'about nitin']):
+        return (
+            "👨‍💻 Kadavakollu Nitin Satya is a passionate tech enthusiast, software developer, and entrepreneur. "
+            "He is pursuing a B.Tech in Artificial Intelligence & Data Science with a specialization in Cyber Security, "
+            "and also a BBA at KL University. Nitin is the founder of TECHVERRA SOLUTIONS PRIVATE LIMITED, and has worked on projects including AI assistants, "
+            "portfolio sites, chat apps, music players, and more.\n\n"
+            "🌐 Portfolio: [https://nitinsatya2520.github.io](https://nitinsatya2520.github.io)\n"
+            "🐙 GitHub: [https://github.com/nitinsatya2520](https://github.com/nitinsatya2520)\n"
+            "📸 Instagram: [https://instagram.com/nitinsatya2520](https://instagram.com/nitinsatya2520)\n"
+            "💼 LinkedIn: [https://linkedin.com/in/nitinsatya2520](https://linkedin.com/in/nitinsatya2520)\n"
+            "🏢 Company: [https://techverra.in](https://techverra.in)\n\n"
+            "He is known for innovation, dedication, and a passion for building impactful solutions."
+        )
+    elif 'who are you' in command_lower or 'your name' in command_lower:
+        return "I am JAN, your personal AI assistant created by Nitin Satya."
+    
     elif 'who are you' in command_lower or 'your name' in command_lower:
         return "I am JAN, your assistant."
     elif 'time' in command_lower:
